@@ -1,0 +1,202 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "GeoTogether API"
+  description: "API for retrieving GeoTogether smart meter data."
+
+host: "api.geotogether.com"
+schemes:
+  - "https"
+basePath: "/"
+
+paths:
+  /usersservice/v2/login:
+    post:
+      summary: "Authenticate user"
+      description: "Obtain an authentication token by providing user credentials."
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              identity:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        200:
+          description: "Authentication successful"
+          schema:
+            type: "object"
+            properties:
+              accessToken:
+                type: "string"
+        401:
+          description: "Unauthorized"
+
+  /api/userapi/v2/user/detail-systems:
+    get:
+      summary: "Retrieve user device details"
+      description: "Returns a list of systems associated with the authenticated user."
+      parameters:
+        - name: "systemDetails"
+          in: "query"
+          required: true
+          type: "boolean"
+          default: true
+        - name: "Authorization"
+          in: "header"
+          required: true
+          type: "string"
+          description: "Bearer token received from login"
+      responses:
+        200:
+          description: "Device details retrieved"
+          schema:
+            type: "object"
+            properties:
+              systemRoles:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    systemId:
+                      type: "string"
+        401:
+          description: "Unauthorized"
+
+  /api/userapi/system/smets2-live-data/{systemId}:
+    get:
+      summary: "Retrieve live energy data"
+      description: "Fetches real-time electricity and gas usage."
+      parameters:
+        - name: "systemId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Unique system identifier"
+        - name: "Authorization"
+          in: "header"
+          required: true
+          type: "string"
+          description: "Bearer token received from login"
+      responses:
+        200:
+          description: "Live energy data retrieved"
+          schema:
+            type: "object"
+            properties:
+              power:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    type:
+                      type: "string"
+                      enum: ["ELECTRICITY", "GAS_ENERGY"]
+                    watts:
+                      type: "integer"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "System ID not found"
+
+  /api/userapi/system/smets2-periodic-data/{systemId}:
+    get:
+      summary: "Retrieve periodic energy data"
+      description: "Fetches historical electricity and gas usage data."
+      parameters:
+        - name: "systemId"
+          in: "path"
+          required: true
+          type: "string"
+          description: "Unique system identifier"
+        - name: "Authorization"
+          in: "header"
+          required: true
+          type: "string"
+          description: "Bearer token received from login"
+      responses:
+        200:
+          description: "Periodic energy data retrieved"
+          schema:
+            type: "object"
+            properties:
+              history:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    timestamp:
+                      type: "string"
+                      format: "date-time"
+                    type:
+                      type: "string"
+                      enum: ["ELECTRICITY", "GAS_ENERGY"]
+                    consumption:
+                      type: "integer"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "System ID not found"
+
+  /epochservice/v1/system/{systemId}/readings:
+    get:
+      summary: Retrieve historical energy readings
+      description: Fetches historical energy consumption data for a given system within a date range.
+      parameters:
+        - name: systemId
+          in: path
+          required: true
+          type: string
+          description: Unique identifier for the system.
+        - name: startDate
+          in: query
+          required: true
+          type: string
+          format: date
+          description: Start date in 'YYYY-MM-DD' format (e.g., '2025-01-01').
+        - name: endDate
+          in: query
+          required: true
+          type: string
+          format: date
+          description: End date in 'YYYY-MM-DD' format (e.g., '2025-02-01').
+      responses:
+        "200":
+          description: Successful retrieval of energy readings.
+          schema:
+            type: object
+            properties:
+              systemUUID:
+                type: string
+              startTimestamp:
+                type: integer
+                format: int64
+              readings:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    energyType:
+                      type: string
+                    tierType:
+                      type: string
+                    duration:
+                      type: integer
+                    energyWattHours:
+                      type: integer
+                    milliPenceCost:
+                      type: integer
+
+
+securityDefinitions:
+  BearerAuth:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+
+security:
+  - BearerAuth: []
