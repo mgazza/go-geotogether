@@ -168,29 +168,34 @@ paths:
         "200":
           description: Successful retrieval of energy readings.
           schema:
-            type: object
-            properties:
-              systemUUID:
-                type: string
-              startTimestamp:
-                type: integer
-                format: int64
-              readings:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    energyType:
-                      type: string
-                    tierType:
-                      type: string
-                    duration:
-                      type: integer
-                    energyWattHours:
-                      type: integer
-                    milliPenceCost:
-                      type: integer
-
+            type: array
+            items:
+              type: object
+              properties:
+                systemUUID:
+                  type: string
+                startTimestamp:
+                  type: number
+                  format: double
+                readings:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      energyType:
+                        type: string
+                        enum: [
+                                "IMPORT",
+                                "GAS_ENERGY"
+                        ]
+                      tierType:
+                        type: string
+                      duration:
+                        type: integer
+                      energyWattHours:
+                        type: integer
+                      milliPenceCost:
+                        type: integer
 
 securityDefinitions:
   BearerAuth:

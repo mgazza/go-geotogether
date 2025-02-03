@@ -7,6 +7,7 @@ package operations
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"strconv"
@@ -15,6 +16,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // GetEpochserviceV1SystemSystemIDReadingsReader is a Reader for the GetEpochserviceV1SystemSystemIDReadings structure.
@@ -47,7 +49,7 @@ GetEpochserviceV1SystemSystemIDReadingsOK describes a response with status code 
 Successful retrieval of energy readings.
 */
 type GetEpochserviceV1SystemSystemIDReadingsOK struct {
-	Payload *GetEpochserviceV1SystemSystemIDReadingsOKBody
+	Payload []*GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0
 }
 
 // IsSuccess returns true when this get epochservice v1 system system Id readings o k response has a 2xx status code
@@ -88,16 +90,14 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOK) String() string {
 	return fmt.Sprintf("[GET /epochservice/v1/system/{systemId}/readings][%d] getEpochserviceV1SystemSystemIdReadingsOK  %+v", 200, o.Payload)
 }
 
-func (o *GetEpochserviceV1SystemSystemIDReadingsOK) GetPayload() *GetEpochserviceV1SystemSystemIDReadingsOKBody {
+func (o *GetEpochserviceV1SystemSystemIDReadingsOK) GetPayload() []*GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0 {
 	return o.Payload
 }
 
 func (o *GetEpochserviceV1SystemSystemIDReadingsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(GetEpochserviceV1SystemSystemIDReadingsOKBody)
-
 	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -105,23 +105,23 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOK) readResponse(response runtim
 }
 
 /*
-GetEpochserviceV1SystemSystemIDReadingsOKBody get epochservice v1 system system ID readings o k body
-swagger:model GetEpochserviceV1SystemSystemIDReadingsOKBody
+GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0 get epochservice v1 system system ID readings o k body items0
+swagger:model GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0
 */
-type GetEpochserviceV1SystemSystemIDReadingsOKBody struct {
+type GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0 struct {
 
 	// readings
-	Readings []*GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0 `json:"readings"`
+	Readings []*GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0 `json:"readings"`
 
 	// start timestamp
-	StartTimestamp int64 `json:"startTimestamp,omitempty"`
+	StartTimestamp float64 `json:"startTimestamp,omitempty"`
 
 	// system UUID
 	SystemUUID string `json:"systemUUID,omitempty"`
 }
 
-// Validate validates this get epochservice v1 system system ID readings o k body
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) Validate(formats strfmt.Registry) error {
+// Validate validates this get epochservice v1 system system ID readings o k body items0
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateReadings(formats); err != nil {
@@ -134,7 +134,7 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) Validate(formats strfmt.
 	return nil
 }
 
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) validateReadings(formats strfmt.Registry) error {
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0) validateReadings(formats strfmt.Registry) error {
 	if swag.IsZero(o.Readings) { // not required
 		return nil
 	}
@@ -147,9 +147,9 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) validateReadings(formats
 		if o.Readings[i] != nil {
 			if err := o.Readings[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("getEpochserviceV1SystemSystemIdReadingsOK" + "." + "readings" + "." + strconv.Itoa(i))
+					return ve.ValidateName("readings" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("getEpochserviceV1SystemSystemIdReadingsOK" + "." + "readings" + "." + strconv.Itoa(i))
+					return ce.ValidateName("readings" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -160,8 +160,8 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) validateReadings(formats
 	return nil
 }
 
-// ContextValidate validate this get epochservice v1 system system ID readings o k body based on the context it is used
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this get epochservice v1 system system ID readings o k body items0 based on the context it is used
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.contextValidateReadings(ctx, formats); err != nil {
@@ -174,16 +174,16 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) ContextValidate(ctx cont
 	return nil
 }
 
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) contextValidateReadings(ctx context.Context, formats strfmt.Registry) error {
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0) contextValidateReadings(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(o.Readings); i++ {
 
 		if o.Readings[i] != nil {
 			if err := o.Readings[i].ContextValidate(ctx, formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
-					return ve.ValidateName("getEpochserviceV1SystemSystemIdReadingsOK" + "." + "readings" + "." + strconv.Itoa(i))
+					return ve.ValidateName("readings" + "." + strconv.Itoa(i))
 				} else if ce, ok := err.(*errors.CompositeError); ok {
-					return ce.ValidateName("getEpochserviceV1SystemSystemIdReadingsOK" + "." + "readings" + "." + strconv.Itoa(i))
+					return ce.ValidateName("readings" + "." + strconv.Itoa(i))
 				}
 				return err
 			}
@@ -195,7 +195,7 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) contextValidateReadings(
 }
 
 // MarshalBinary interface implementation
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) MarshalBinary() ([]byte, error) {
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -203,8 +203,8 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) MarshalBinary() ([]byte,
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) UnmarshalBinary(b []byte) error {
-	var res GetEpochserviceV1SystemSystemIDReadingsOKBody
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0) UnmarshalBinary(b []byte) error {
+	var res GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -213,15 +213,16 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBody) UnmarshalBinary(b []byte
 }
 
 /*
-GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0 get epochservice v1 system system ID readings o k body readings items0
-swagger:model GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0
+GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0 get epochservice v1 system system ID readings o k body items0 readings items0
+swagger:model GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0
 */
-type GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0 struct {
+type GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0 struct {
 
 	// duration
 	Duration int64 `json:"duration,omitempty"`
 
 	// energy type
+	// Enum: [IMPORT GAS_ENERGY]
 	EnergyType string `json:"energyType,omitempty"`
 
 	// energy watt hours
@@ -234,18 +235,69 @@ type GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0 struct {
 	TierType string `json:"tierType,omitempty"`
 }
 
-// Validate validates this get epochservice v1 system system ID readings o k body readings items0
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0) Validate(formats strfmt.Registry) error {
+// Validate validates this get epochservice v1 system system ID readings o k body items0 readings items0
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateEnergyType(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this get epochservice v1 system system ID readings o k body readings items0 based on context it is used
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+var getEpochserviceV1SystemSystemIdReadingsOKBodyItems0ReadingsItems0TypeEnergyTypePropEnum []interface{}
+
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["IMPORT","GAS_ENERGY"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		getEpochserviceV1SystemSystemIdReadingsOKBodyItems0ReadingsItems0TypeEnergyTypePropEnum = append(getEpochserviceV1SystemSystemIdReadingsOKBodyItems0ReadingsItems0TypeEnergyTypePropEnum, v)
+	}
+}
+
+const (
+
+	// GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0EnergyTypeIMPORT captures enum value "IMPORT"
+	GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0EnergyTypeIMPORT string = "IMPORT"
+
+	// GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0EnergyTypeGASENERGY captures enum value "GAS_ENERGY"
+	GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0EnergyTypeGASENERGY string = "GAS_ENERGY"
+)
+
+// prop value enum
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0) validateEnergyTypeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, getEpochserviceV1SystemSystemIdReadingsOKBodyItems0ReadingsItems0TypeEnergyTypePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0) validateEnergyType(formats strfmt.Registry) error {
+	if swag.IsZero(o.EnergyType) { // not required
+		return nil
+	}
+
+	// value enum
+	if err := o.validateEnergyTypeEnum("energyType", "body", o.EnergyType); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// ContextValidate validates this get epochservice v1 system system ID readings o k body items0 readings items0 based on context it is used
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0) MarshalBinary() ([]byte, error) {
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -253,8 +305,8 @@ func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0) MarshalBin
 }
 
 // UnmarshalBinary interface implementation
-func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0) UnmarshalBinary(b []byte) error {
-	var res GetEpochserviceV1SystemSystemIDReadingsOKBodyReadingsItems0
+func (o *GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0) UnmarshalBinary(b []byte) error {
+	var res GetEpochserviceV1SystemSystemIDReadingsOKBodyItems0ReadingsItems0
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
