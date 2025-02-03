@@ -172,6 +172,9 @@ swagger:model GetAPIUserapiV2UserDetailSystemsOKBody
 */
 type GetAPIUserapiV2UserDetailSystemsOKBody struct {
 
+	// system details
+	SystemDetails []*GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0 `json:"systemDetails"`
+
 	// system roles
 	SystemRoles []*GetAPIUserapiV2UserDetailSystemsOKBodySystemRolesItems0 `json:"systemRoles"`
 }
@@ -180,6 +183,10 @@ type GetAPIUserapiV2UserDetailSystemsOKBody struct {
 func (o *GetAPIUserapiV2UserDetailSystemsOKBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.validateSystemDetails(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.validateSystemRoles(formats); err != nil {
 		res = append(res, err)
 	}
@@ -187,6 +194,32 @@ func (o *GetAPIUserapiV2UserDetailSystemsOKBody) Validate(formats strfmt.Registr
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *GetAPIUserapiV2UserDetailSystemsOKBody) validateSystemDetails(formats strfmt.Registry) error {
+	if swag.IsZero(o.SystemDetails) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.SystemDetails); i++ {
+		if swag.IsZero(o.SystemDetails[i]) { // not required
+			continue
+		}
+
+		if o.SystemDetails[i] != nil {
+			if err := o.SystemDetails[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getApiUserapiV2UserDetailSystemsOK" + "." + "systemDetails" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getApiUserapiV2UserDetailSystemsOK" + "." + "systemDetails" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -220,6 +253,10 @@ func (o *GetAPIUserapiV2UserDetailSystemsOKBody) validateSystemRoles(formats str
 func (o *GetAPIUserapiV2UserDetailSystemsOKBody) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := o.contextValidateSystemDetails(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := o.contextValidateSystemRoles(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -227,6 +264,26 @@ func (o *GetAPIUserapiV2UserDetailSystemsOKBody) ContextValidate(ctx context.Con
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (o *GetAPIUserapiV2UserDetailSystemsOKBody) contextValidateSystemDetails(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.SystemDetails); i++ {
+
+		if o.SystemDetails[i] != nil {
+			if err := o.SystemDetails[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("getApiUserapiV2UserDetailSystemsOK" + "." + "systemDetails" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("getApiUserapiV2UserDetailSystemsOK" + "." + "systemDetails" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -269,10 +326,274 @@ func (o *GetAPIUserapiV2UserDetailSystemsOKBody) UnmarshalBinary(b []byte) error
 }
 
 /*
+GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0 get API userapi v2 user detail systems o k body system details items0
+swagger:model GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0
+*/
+type GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0 struct {
+
+	// devices
+	Devices []*GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0 `json:"devices"`
+
+	// name
+	Name string `json:"name,omitempty"`
+
+	// system Id
+	SystemID string `json:"systemId,omitempty"`
+}
+
+// Validate validates this get API userapi v2 user detail systems o k body system details items0
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateDevices(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0) validateDevices(formats strfmt.Registry) error {
+	if swag.IsZero(o.Devices) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(o.Devices); i++ {
+		if swag.IsZero(o.Devices[i]) { // not required
+			continue
+		}
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get API userapi v2 user detail systems o k body system details items0 based on the context it is used
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateDevices(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0) contextValidateDevices(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(o.Devices); i++ {
+
+		if o.Devices[i] != nil {
+			if err := o.Devices[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("devices" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("devices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0) UnmarshalBinary(b []byte) error {
+	var res GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0 get API userapi v2 user detail systems o k body system details items0 devices items0
+swagger:model GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0
+*/
+type GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0 struct {
+
+	// device type
+	DeviceType string `json:"deviceType,omitempty"`
+
+	// node Id
+	NodeID int64 `json:"nodeId,omitempty"`
+
+	// paired timestamp
+	PairedTimestamp int64 `json:"pairedTimestamp,omitempty"`
+
+	// pairing code
+	PairingCode string `json:"pairingCode,omitempty"`
+
+	// sensor type
+	SensorType int64 `json:"sensorType,omitempty"`
+
+	// upgrade required
+	UpgradeRequired bool `json:"upgradeRequired,omitempty"`
+
+	// version number
+	VersionNumber *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber `json:"versionNumber,omitempty"`
+}
+
+// Validate validates this get API userapi v2 user detail systems o k body system details items0 devices items0
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateVersionNumber(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0) validateVersionNumber(formats strfmt.Registry) error {
+	if swag.IsZero(o.VersionNumber) { // not required
+		return nil
+	}
+
+	if o.VersionNumber != nil {
+		if err := o.VersionNumber.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("versionNumber")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("versionNumber")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this get API userapi v2 user detail systems o k body system details items0 devices items0 based on the context it is used
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.contextValidateVersionNumber(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0) contextValidateVersionNumber(ctx context.Context, formats strfmt.Registry) error {
+
+	if o.VersionNumber != nil {
+		if err := o.VersionNumber.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("versionNumber")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("versionNumber")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0) UnmarshalBinary(b []byte) error {
+	var res GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
+GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber get API userapi v2 user detail systems o k body system details items0 devices items0 version number
+swagger:model GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber
+*/
+type GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber struct {
+
+	// major
+	Major int64 `json:"major,omitempty"`
+
+	// minor
+	Minor int64 `json:"minor,omitempty"`
+}
+
+// Validate validates this get API userapi v2 user detail systems o k body system details items0 devices items0 version number
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber) Validate(formats strfmt.Registry) error {
+	return nil
+}
+
+// ContextValidate validates this get API userapi v2 user detail systems o k body system details items0 devices items0 version number based on context it is used
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber) UnmarshalBinary(b []byte) error {
+	var res GetAPIUserapiV2UserDetailSystemsOKBodySystemDetailsItems0DevicesItems0VersionNumber
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
+}
+
+/*
 GetAPIUserapiV2UserDetailSystemsOKBodySystemRolesItems0 get API userapi v2 user detail systems o k body system roles items0
 swagger:model GetAPIUserapiV2UserDetailSystemsOKBodySystemRolesItems0
 */
 type GetAPIUserapiV2UserDetailSystemsOKBodySystemRolesItems0 struct {
+
+	// name
+	Name string `json:"name,omitempty"`
+
+	// roles
+	Roles []string `json:"roles"`
 
 	// system Id
 	SystemID string `json:"systemId,omitempty"`
